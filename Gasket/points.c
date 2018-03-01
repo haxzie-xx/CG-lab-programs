@@ -18,19 +18,19 @@ void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	for( i=0; i<50000; i++)
+	for( i=0; i<100000; i++)
 	{
 		int j = rand() % 3;
 		glBegin(GL_POINTS);
 			switch (j){
 				case 0:
-					glColor3f(1.0, 0.0, 0.0);
+					glColor3f(0.7, 0.3, 0.2);
 					break;
 				case 1:
-					glColor3f(0.0, 1.0, 0.0);
+					glColor3f(0.4, 0.2, 0.8);
 					break;
 				default:
-					glColor3f(0.0, 0.0, 1.0);
+					glColor3f(0.4, 0.8, 0.0);
 					break;
 			}
 			p[0] = (p[0] + v[j][0]) /2;
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(20, 30);
-	glutCreateWindow("Gasket Points");
+	glutCreateWindow("2D Sierpenski's Gasket using Points");
 	init();
 	glutDisplayFunc(display);
 	glutMainLoop();

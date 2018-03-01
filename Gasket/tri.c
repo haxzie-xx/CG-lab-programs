@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
 	glutInitWindowSize(500,500);
 	glutInitWindowPosition(20, 30);
-	glutCreateWindow("Serpenski's Gasket Traingle");
+	glutCreateWindow("2D Serpenski's Gasket Traingle");
 	init();
 	glutDisplayFunc(display);
 	glutMainLoop();
@@ -57,23 +57,22 @@ void divideTriangle(GLfloat *A, GLfloat *B, GLfloat *C, int divisions)
 	}
 	else
 	{
-	
-		printf("%d\n", col%3);	
-		switch(col++ % 3){
+		col++;
+		switch(col % 3){
 			case 0:
-				glColor3f(5.0, 1.0, 0.0);
+				glColor3f(0.5, 1.0, 0.2);
 				break;
 			case 1:
-				glColor3f(0.0, 5.0, 1.0);
+				glColor3f(0.5, 0.5, 1.0);
 				break;
 			case 2:
-				glColor3f(0.0, 0.0, 0.0);
+				glColor3f(0.4, 0.6, 0.4);
 				break;
 			default:
-				glColor3f(1.0, 5.0, 0.0);
+				glColor3f(0.0, 0.0, 0.0);
 				break;
 		}			
-				
+
 		drawTriangle(A, B, C);
 	}
 	

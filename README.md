@@ -6,7 +6,7 @@
 ```
 sudo apt-get install freeglut3 freeglut3-dev
 ```
-- Clone the repository and CD over to [the test directory](https://github.com/haxzie/CG-lab-programs/test), execute the following command
+- Clone the repository and CD over to [the test directory](https://github.com/haxzie/CG-lab-programs/tree/master/test), execute the following command
 
 ```
 $ gcc test.c -lGL -lGLU -lglut

@@ -70,9 +70,7 @@ void drawX(int x0, int y0, int x1, int y1)
 	int delX, delY, xi, i, x, y, p0;
 	delX = x1 - x0;
 	delY = y1 - y0;
-	
-	printf("Inside Draw X\n");
-	
+		
 	xi = 1;
 	
 	if (delX < 0)
@@ -86,7 +84,6 @@ void drawX(int x0, int y0, int x1, int y1)
 	{
 		y = i;
 		plot(x, y);
-		printf("\t%d\t%d\n", x,y);
 		
 		if (p0 > 0)
 		{
@@ -104,9 +101,7 @@ void drawY(int x0, int y0, int x1, int y1)
 	int delX, delY, yi, i, x, y, p0;
 	delX = x1 - x0;
 	delY = y1 - y0;
-	
-	printf("Inside Draw Y\n");
-	
+		
 	yi = 1;
 	if (delY < 0)
 	{

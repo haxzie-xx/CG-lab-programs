@@ -12,28 +12,67 @@ GLfloat vertex[8][3] = { 	{-30.0, 30.0, 30.0},
 
 GLfloat colors[6][3] = { 
 				{0.6, 0.2, 0.2},
-				{0.5, 0.4, 0.1},
-				{0.5, 0.4, 0.4},
-				{0.2, 0.5, 0.1},
-				{0.1, 0.4, 0.4},
-				{0.0, 0.4, 0.3}
+				{0.7, 0.4, 0.1},
+				{0.5, 0.7, 0.4},
+				{0.2, 0.5, 0.7},
+				{0.6, 0.4, 0.4},
+				{1.0, 0.4, 0.3}
 			};
-GLfloat angle = 88.0;
+			
+GLubyte patt[] = {
+			0x01, 0x80, 0x01, 0x80,
+			0x02, 0x40, 0x02, 0x40,
+			0x8c, 0x61, 0x8c, 0x61,
+			0x98, 0x31, 0x98, 0x31,
+			0x31, 0x98, 0x31, 0x98,
+			0x21, 0x8c, 0x21, 0x8c,
+			0x60, 0x06, 0x60, 0x06,
+			0x80, 0x81, 0x80, 0x81,
+			0x01, 0x80, 0x01, 0x80,
+			0x02, 0x40, 0x02, 0x40,
+			0x8c, 0x61, 0x8c, 0x61,
+			0x98, 0x31, 0x98, 0x31,
+			0x31, 0x98, 0x31, 0x98,
+			0x21, 0x8c, 0x21, 0x8c,
+			0x60, 0x06, 0x60, 0x06,
+			0x80, 0x81, 0x80, 0x81,
+			0x01, 0x80, 0x01, 0x80,
+			0x02, 0x40, 0x02, 0x40,
+			0x8c, 0x61, 0x8c, 0x61,
+			0x98, 0x31, 0x98, 0x31,
+			0x31, 0x98, 0x31, 0x98,
+			0x21, 0x8c, 0x21, 0x8c,
+			0x60, 0x06, 0x60, 0x06,
+			0x80, 0x81, 0x80, 0x81,
+			0x01, 0x80, 0x01, 0x80,
+			0x02, 0x40, 0x02, 0x40,
+			0x8c, 0x61, 0x8c, 0x61,
+			0x98, 0x31, 0x98, 0x31,
+			0x31, 0x98, 0x31, 0x98,
+			0x21, 0x8c, 0x21, 0x8c,
+			0x60, 0x06, 0x60, 0x06,
+			0x80, 0x81, 0x80, 0x81
+			
+		};
+
+			
+GLfloat angle[3] = {45.0, 45.0, 45.0};
+GLfloat rX = 0, rY = 0, rZ = 0;
+int currentAxis = 0;
 
 void init()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-100.0, 100.0, -100.0, 100.0, -100.0, 100.0);
+	glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
 	glMatrixMode(GL_MODELVIEW);
-	glClearColor(0.2, 0.1, 0.3, 1.0);
-	
-	
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+		
 }
 
 void drawFace(GLfloat* A, GLfloat* B, GLfloat* C, GLfloat* D, GLfloat* color)
 {
-		glColor3fv(color);	
+	glColor3fv(color);	
 	glBegin(GL_POLYGON);
 		glVertex3fv(A);
 		glVertex3fv(B);
@@ -47,7 +86,7 @@ void drawCube()
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glRotatef(angle, 1.0, 1.0, 1.0);
+	glRotatef(angle[currentAxis], rX, rY, rZ);
 
 	
 	//raw all the faces
@@ -63,13 +102,44 @@ void drawCube()
 
 void spinCube()
 {
-	if ( angle < 360.0)
-		angle += 0.5;
+	if ( angle[currentAxis] < 360.0)
+		angle[currentAxis] += 0.7;
 	else
-		angle = 0;
+		angle[currentAxis] = 0;
 	
 	glutPostRedisplay();
 }
+
+void mouseControl(int button, int state, int x, int y)
+{
+	if(state == GLUT_DOWN)
+		switch(button)
+		{
+			case GLUT_LEFT_BUTTON:
+				currentAxis = 0;
+				if(rX == 0)
+					rX = 1;
+				else
+					rX = 0;
+				break;
+			case GLUT_RIGHT_BUTTON:
+				currentAxis = 1;
+				if(rY == 0)
+					rY = 1;
+				else
+					rY = 0;
+				break;
+			case GLUT_MIDDLE_BUTTON:
+				currentAxis = 2;
+				if(rZ == 0)
+					rZ = 1;
+				else
+					rZ = 0;
+				break;
+				
+		}
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -77,11 +147,15 @@ int main(int argc, char **argv)
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(20, 30);
 	glutCreateWindow("3D CUBE");
-	glEnable(GL_DEPTH_TEST);
-	//glutIdleFunc(spinCube);
-	glutMouseFunc(spinCube);
+	glEnable(GL_DEPTH_TEST|GL_POLYGON_STIPPLE);
+	glPolygonStipple(patt);
+	
+	glutIdleFunc(spinCube);
+	glutMouseFunc(mouseControl);
+	
 	init();
 	glutDisplayFunc(drawCube);
+	
 	glutMainLoop();
 	return 0;
 }

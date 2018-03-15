@@ -18,47 +18,11 @@ GLfloat colors[6][3] = {
 				{0.6, 0.4, 0.4},
 				{1.0, 0.4, 0.3}
 			};
-			
-GLubyte patt[] = {
-			0x01, 0x80, 0x01, 0x80,
-			0x02, 0x40, 0x02, 0x40,
-			0x8c, 0x61, 0x8c, 0x61,
-			0x98, 0x31, 0x98, 0x31,
-			0x31, 0x98, 0x31, 0x98,
-			0x21, 0x8c, 0x21, 0x8c,
-			0x60, 0x06, 0x60, 0x06,
-			0x80, 0x81, 0x80, 0x81,
-			0x01, 0x80, 0x01, 0x80,
-			0x02, 0x40, 0x02, 0x40,
-			0x8c, 0x61, 0x8c, 0x61,
-			0x98, 0x31, 0x98, 0x31,
-			0x31, 0x98, 0x31, 0x98,
-			0x21, 0x8c, 0x21, 0x8c,
-			0x60, 0x06, 0x60, 0x06,
-			0x80, 0x81, 0x80, 0x81,
-			0x01, 0x80, 0x01, 0x80,
-			0x02, 0x40, 0x02, 0x40,
-			0x8c, 0x61, 0x8c, 0x61,
-			0x98, 0x31, 0x98, 0x31,
-			0x31, 0x98, 0x31, 0x98,
-			0x21, 0x8c, 0x21, 0x8c,
-			0x60, 0x06, 0x60, 0x06,
-			0x80, 0x81, 0x80, 0x81,
-			0x01, 0x80, 0x01, 0x80,
-			0x02, 0x40, 0x02, 0x40,
-			0x8c, 0x61, 0x8c, 0x61,
-			0x98, 0x31, 0x98, 0x31,
-			0x31, 0x98, 0x31, 0x98,
-			0x21, 0x8c, 0x21, 0x8c,
-			0x60, 0x06, 0x60, 0x06,
-			0x80, 0x81, 0x80, 0x81
-			
-		};
 
 			
 GLfloat angle[3] = {45.0, 45.0, 45.0};
 GLfloat rX = 0, rY = 0, rZ = 0;
-int currentAxis = 0;
+int axis = 0;
 
 void init()
 {
@@ -86,8 +50,9 @@ void drawCube()
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glRotatef(angle[currentAxis], rX, rY, rZ);
-
+	glRotatef(angle[0], 1, 0, 0);
+	glRotatef(angle[1], 0, 1, 0);
+	glRotatef(angle[2], 0, 0, 1);
 	
 	//raw all the faces
 	drawFace(vertex[0], vertex[1], vertex[2], vertex[3], colors[0]);
@@ -102,10 +67,9 @@ void drawCube()
 
 void spinCube()
 {
-	if ( angle[currentAxis] < 360.0)
-		angle[currentAxis] += 0.7;
-	else
-		angle[currentAxis] = 0;
+	angle[axis] += 0.7;
+	if ( angle[axis] >= 360.0)
+		angle[axis] = 0;
 	
 	glutPostRedisplay();
 }
@@ -116,25 +80,13 @@ void mouseControl(int button, int state, int x, int y)
 		switch(button)
 		{
 			case GLUT_LEFT_BUTTON:
-				currentAxis = 0;
-				if(rX == 0)
-					rX = 1;
-				else
-					rX = 0;
+				axis = 0;
 				break;
 			case GLUT_RIGHT_BUTTON:
-				currentAxis = 1;
-				if(rY == 0)
-					rY = 1;
-				else
-					rY = 0;
+				axis = 1;
 				break;
 			case GLUT_MIDDLE_BUTTON:
-				currentAxis = 2;
-				if(rZ == 0)
-					rZ = 1;
-				else
-					rZ = 0;
+				axis = 2;
 				break;
 				
 		}
@@ -147,8 +99,8 @@ int main(int argc, char **argv)
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(20, 30);
 	glutCreateWindow("3D CUBE");
-	glEnable(GL_DEPTH_TEST|GL_POLYGON_STIPPLE);
-	glPolygonStipple(patt);
+	glEnable(GL_DEPTH_TEST);
+	//glPolygonStipple(patt);
 	
 	glutIdleFunc(spinCube);
 	glutMouseFunc(mouseControl);

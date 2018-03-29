@@ -80,6 +80,57 @@ void display()
 	glFlush();
 }
 
+void rotate_pt(GLfloat x, GLfloat y, GLfloat theta)
+{
+	GLfloat temp1[3][1]={{0},{0},{0}};
+	GLfloat temp2[3][1]={{0},{0},{0}};
+	GLfloat temp3[3][1]={{0},{0},{0}};
+
+	GLfloat rest[3][3];
+	GLfloat rot_mat[3][3];
+	GLfloat pivotmat[][3]={{1,0,0},{0,1,0},{0,0,1}}; //pivot matrix
+	GLfloat pivotinvmat[3][3]={{1,0,0},{0,1,0},{0,0,1}}; //inverse pivot matrix
+    
+	pivotmat[0][2]=x;
+	pivotmat[1][2]=y;
+
+	pivotinvmat[0][2]=-x;
+	pivotinvmat[1][2]=-y;
+	rot_mat[0][0] = cos(theta);
+	rot_mat[0][1] = -sin(theta);
+	rot_mat[1][0] = sin(theta);
+	rot_mat[1][1] = cos(theta);
+	rot_mat[2][2] = 1;
+
+
+	multiplyMatrices(pivotmat,rot_mat,resultmat,3,3,3,3); 
+	memcpy(rest, resultmat, sizeof(rest)); //copies resultmat to rest
+	multiplyMatrices(rest,pivotinvmat,resultmat,3,3,3,3);
+
+	
+	GLfloat temp[3][1];
+
+	memcpy(temp, imagemat[0], sizeof(temp)); //copies first point to temp
+	memcpy(rest, resultmat, sizeof(rest));
+
+	multiplyMatrices1(rest,temp,temp1,3,3,3,1); //new first point is stored in temp1
+	memcpy(temp, imagemat[1], sizeof(temp)); //copies second  point to temp
+	multiplyMatrices1(rest,temp,temp2,3,3,3,1); //new second point is stored in temp2
+	memcpy(temp, imagemat[2], sizeof(temp)); //copies third point to temp
+	multiplyMatrices1(rest,temp,temp3,3,3,3,1); //new third point is stored in temp3
+	
+	int i = 0;
+	for (i=0; i<3; i++) //combines all points to newimage
+	{
+		newimage[0][i]=temp1[i][0];
+		newimage[1][i]=temp2[i][0];
+		newimage[2][i]=temp3[i][0];
+	}
+	
+
+ 
+}
+
 int main(int argc, char **argv)
 {
 
@@ -92,8 +143,8 @@ int main(int argc, char **argv)
 	glutInitWindowSize(700, 700);
 	glutInitWindowPosition(10, 10);
 	glutCreateWindow("Rotation");
-	glEnable(GL_POLYGON_STIPPLE);
-	glPolygonStipple(patt);
+	//glEnable(GL_POLYGON_STIPPLE);
+	//glPolygonStipple(patt);
 	init();
 	glutDisplayFunc(display);
 	glutMainLoop();

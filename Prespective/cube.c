@@ -11,6 +11,7 @@ GLfloat vertex[8][3] = { 	{-30.0, 30.0, 30.0},
 				{-30.0, -30.0, -30.0}};
 
 GLfloat colors[6][3] = { 
+
 				{0.6, 0.2, 0.2},
 				{0.7, 0.4, 0.1},
 				{0.5, 0.7, 0.4},
@@ -22,17 +23,19 @@ GLfloat colors[6][3] = {
 			
 GLfloat angle[3] = {45.0, 45.0, 45.0};
 GLfloat rX = 0, rY = 0, rZ = 0;
-int axis = 0;
+int axis = -1;
 
 void init()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, 1.3, 0, 90);
+	//glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
+    glFrustum(-90.0, 90.0, -90.0, 90.0, 10.0, 90.0);
 	glMatrixMode(GL_MODELVIEW);
-	gluPerspective (90, 1, 10, 1000);
+	// gluPerspective (45, 1.3, 0, 50);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
-		
+    gluLookAt(0,0,1,0,0,0,0,1,10);
+	glLoadIdentity();
 }
 
 void drawFace(GLfloat* A, GLfloat* B, GLfloat* C, GLfloat* D, GLfloat* color)
@@ -68,10 +71,14 @@ void drawCube()
 
 void spinCube()
 {
-	angle[axis] += 0.7;
+    if( axis == -1)
+        return;
+
 	if ( angle[axis] >= 360.0)
 		angle[axis] = 0;
-	
+	else {
+        	angle[axis] += 0.7;
+    }
 	glutPostRedisplay();
 }
 
@@ -93,6 +100,32 @@ void mouseControl(int button, int state, int x, int y)
 		}
 }
 
+void keyboardControl(unsigned char key,int x, int y)
+{
+	switch(key)
+	{
+		case 'x':
+			if(axis != 0){
+				axis = 0;
+			} else {
+				axis = -1;
+			}
+			break;
+		case 'y':
+			if(axis != 1){
+				axis = 1;
+			} else {
+				axis = -1;
+			}
+		case 'z':
+			if(axis != 2){
+				axis = 2;
+			} else {
+				axis = -1;
+			}
+			break;
+	}
+}
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -105,7 +138,8 @@ int main(int argc, char **argv)
 	
 	glutIdleFunc(spinCube);
 	glutMouseFunc(mouseControl);
-	
+	glutKeyboardFunc(keyboardControl);
+
 	init();
 	glutDisplayFunc(drawCube);
 	

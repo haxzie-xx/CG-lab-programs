@@ -28,11 +28,13 @@ void init()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, 1.3, 0, 90);
+	//glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
+    glFrustum(-90.0, 90.0, -90.0, 90.0, 10.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
-	gluPerspective (90, 1, 10, 1000);
+	// gluPerspective (45, 1.3, 0, 50);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
-		
+    gluLookAt(0,0,1,0,0,0,0,1,10);
+	glLoadIdentity();
 }
 
 void drawFace(GLfloat* A, GLfloat* B, GLfloat* C, GLfloat* D, GLfloat* color)

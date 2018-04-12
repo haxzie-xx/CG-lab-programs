@@ -5,20 +5,19 @@
 void init()
 {
     
-
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
 	glMatrixMode(GL_MODELVIEW);
-	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glLoadIdentity();
 }
 
 void display()
 {
 
-    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0}; /* bright white */
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    GLfloat mat_specular[] = {1.0, 5.0, 5.0, 1.0}; /* bright white */
     GLfloat mat_diffuse[] = {1.0, 0.5, 0.0, 1.0}; /* orange color */
     GLfloat mat_ambient[] = {1.0, 0.5, 0.0, 1.0}; /* same as diffuse */
     GLfloat mat_shininess = 5.0;
@@ -31,7 +30,9 @@ void display()
     GLfloat light_position1[]={25.0f,50.0f,50.0f,1.0f};
     glLightfv(GL_LIGHT0, GL_POSITION,light_position1);
     glLightfv(GL_LIGHT0,GL_DIFFUSE,lightIntensity1);
-    glutSolidTeapot(30);
+
+    glColor3f(5.0, 3.0, 5.0);
+    glutSolidTeapot(50);
     glFlush();
 	glutSwapBuffers();
 
@@ -45,6 +46,8 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(20, 30);
 	glutCreateWindow("3D TEAPOT");
 	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 	//glPolygonStipple(patt);
 	
 	init();

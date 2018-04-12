@@ -23,7 +23,7 @@ GLfloat colors[6][3] = {
 			
 GLfloat angle[3] = {45.0, 45.0, 45.0};
 GLfloat rX = 0, rY = 0, rZ = 0;
-int axis = 0;
+int axis = -1;
 
 void init()
 {
@@ -71,9 +71,9 @@ void drawCube()
 
 void spinCube()
 {
-    if( axis == 0)
+    if( axis == -1)
         return;
-        
+
 	if ( angle[axis] >= 360.0)
 		angle[axis] = 0;
 	else {
@@ -100,6 +100,32 @@ void mouseControl(int button, int state, int x, int y)
 		}
 }
 
+void keyboardControl(unsigned char key,int x, int y)
+{
+	switch(key)
+	{
+		case 'x':
+			if(axis != 0){
+				axis = 0;
+			} else {
+				axis = -1;
+			}
+			break;
+		case 'y':
+			if(axis != 1){
+				axis = 1;
+			} else {
+				axis = -1;
+			}
+		case 'z':
+			if(axis != 2){
+				axis = 2;
+			} else {
+				axis = -1;
+			}
+			break;
+	}
+}
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -112,7 +138,8 @@ int main(int argc, char **argv)
 	
 	glutIdleFunc(spinCube);
 	glutMouseFunc(mouseControl);
-	
+	glutKeyboardFunc(keyboardControl);
+
 	init();
 	glutDisplayFunc(drawCube);
 	

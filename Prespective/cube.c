@@ -11,6 +11,7 @@ GLfloat vertex[8][3] = { 	{-30.0, 30.0, 30.0},
 				{-30.0, -30.0, -30.0}};
 
 GLfloat colors[6][3] = { 
+
 				{0.6, 0.2, 0.2},
 				{0.7, 0.4, 0.1},
 				{0.5, 0.7, 0.4},
@@ -29,7 +30,7 @@ void init()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
-    glFrustum(-90.0, 90.0, -90.0, 90.0, 10.0, 100.0);
+    glFrustum(-90.0, 90.0, -90.0, 90.0, 10.0, 90.0);
 	glMatrixMode(GL_MODELVIEW);
 	// gluPerspective (45, 1.3, 0, 50);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -70,10 +71,14 @@ void drawCube()
 
 void spinCube()
 {
-	angle[axis] += 0.7;
+    if( axis == 0)
+        return;
+        
 	if ( angle[axis] >= 360.0)
 		angle[axis] = 0;
-	
+	else {
+        	angle[axis] += 0.7;
+    }
 	glutPostRedisplay();
 }
 

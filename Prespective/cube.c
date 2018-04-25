@@ -30,11 +30,11 @@ void init()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//glOrtho(-90.0, 90.0, -90.0, 90.0, -90.0, 90.0);
-    glFrustum(-90.0, 90.0, -90.0, 90.0, 10.0, 90.0);
+    glFrustum(-100.0, 100.0, -100.0, 100.0, 20.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 	// gluPerspective (45, 1.3, 0, 50);
 	glClearColor(1.0, 1.0, 1.0, 1.0);
-    gluLookAt(0,0,1,0,0,0,0,1,10);
+    gluLookAt(0,0,0,0,0,0,0,0,0);
 	glLoadIdentity();
 }
 
@@ -117,6 +117,7 @@ void keyboardControl(unsigned char key,int x, int y)
 			} else {
 				axis = -1;
 			}
+			break;
 		case 'z':
 			if(axis != 2){
 				axis = 2;

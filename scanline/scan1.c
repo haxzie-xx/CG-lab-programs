@@ -14,7 +14,6 @@ void init()
 {	
 	
 	glClearColor(1,1,1,1);
-	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0,1000,0,1000);
@@ -212,15 +211,17 @@ void menu(int num)
 	}
 	glutPostRedisplay();
 }
+
 void createmenu(void)
 {
-int menu_id;
-menu_id=glutCreateMenu(menu);
-glutAddMenuEntry("RED",1);
-glutAddMenuEntry("BLUE",2);
-glutAddMenuEntry("GREEN",3);
-glutAttachMenu(GLUT_RIGHT_BUTTON);
+	int menu_id;
+	menu_id=glutCreateMenu(menu);
+	glutAddMenuEntry("RED",1);
+	glutAddMenuEntry("BLUE",2);
+	glutAddMenuEntry("GREEN",3);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
+
 int main(int argc,char **argv)
 {
 	glutInit(&argc,argv);

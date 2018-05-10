@@ -216,8 +216,7 @@ void myinit(void)
 
 }
 
-void 
-myReshape(int w, int h)
+void myReshape(int w, int h)
 {
 
 	glViewport(0, 0, w, h);

@@ -57,7 +57,7 @@ void display()
 	glLightfv(GL_LIGHT0,GL_AMBIENT,coltab);     //leg1
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,coltab);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,coltab);
-glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,coltab1);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,coltab1);
 	glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,coltab1);
 	glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,coltab1);
 
